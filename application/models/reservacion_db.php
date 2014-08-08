@@ -48,6 +48,7 @@ Class reservacion_db extends CI_MODEL
         }
         return  $this->db->get()->result();
     }
+    
  
     /**
      * Obtiene la cuenta de registros de la consulta
@@ -62,6 +63,59 @@ Class reservacion_db extends CI_MODEL
         if ($showCo != "true"){
             $this->db->where('reservacion.estadoReservacionId <> 4');
         }
+        return  $this->db->get()->result();
+    }
+    
+    public function getSearchEntrance($fecha, $pagina){
+        $this->db->select('clientes.completo');
+        $this->db->select('reservacion.id, reservacion.codigo, reservacion.fechaLlegada');
+        $this->db->select('reservacion.fechaSalida, cat_status_reservacion.nombre as estado');
+        $this->db->from('reservacion');
+        $this->db->join('clientes', 'reservacion.clienteId = clientes.id');
+        $this->db->join('cat_status_reservacion', 'reservacion.estadoReservacionId = cat_status_reservacion.id');
+        $this->db->where('reservacion.estadoReservacionId = 2');
+        $this->db->where("reservacion.fechaLlegada = '".$fecha."'");
+        if ($pagina > 0){
+            $this->db->limit(10, (($pagina - 1)*10));
+        }
+        return  $this->db->get()->result();
+    }
+    /**
+     * Obtiene la cuenta de registros de la consulta
+     */
+    public function getCountEntrance($fecha){
+        $this->db->select('count(reservacion.id) as total');
+        $this->db->from('reservacion');
+        $this->db->join('clientes', 'reservacion.clienteId = clientes.id');
+        $this->db->join('cat_status_reservacion', 'reservacion.estadoReservacionId = cat_status_reservacion.id');
+        $this->db->where('reservacion.estadoReservacionId = 2');
+        $this->db->where("reservacion.fechaLlegada = '".$fecha."'");
+        return  $this->db->get()->result();
+    }
+    public function getSearchExit($fecha, $pagina){
+        $this->db->select('clientes.completo');
+        $this->db->select('reservacion.id, reservacion.codigo, reservacion.fechaLlegada');
+        $this->db->select('reservacion.fechaSalida, cat_status_reservacion.nombre as estado');
+        $this->db->from('reservacion');
+        $this->db->join('clientes', 'reservacion.clienteId = clientes.id');
+        $this->db->join('cat_status_reservacion', 'reservacion.estadoReservacionId = cat_status_reservacion.id');
+        $this->db->where('reservacion.estadoReservacionId = 3');
+        $this->db->where("reservacion.fechaSalida = '".$fecha."'");
+        if ($pagina > 0){
+            $this->db->limit(10, (($pagina - 1)*10));
+        }
+        return  $this->db->get()->result();
+    }
+    /**
+     * Obtiene la cuenta de registros de la consulta
+     */
+    public function getCountExit($fecha){
+        $this->db->select('count(reservacion.id) as total');
+        $this->db->from('reservacion');
+        $this->db->join('clientes', 'reservacion.clienteId = clientes.id');
+        $this->db->join('cat_status_reservacion', 'reservacion.estadoReservacionId = cat_status_reservacion.id');
+        $this->db->where('reservacion.estadoReservacionId = 3');
+        $this->db->where("reservacion.fechaSalida = '".$fecha."'");
         return  $this->db->get()->result();
     }
  

@@ -43,6 +43,7 @@
             <li <?php echo  $pg =='habitacion' ? 'class="active"' : '' ?>><a href="<?php echo base_url(); ?>admin/habitacion">Habitaciones</a></li>
             <li <?php echo  $pg =='temporada' ? 'class="active"' : '' ?>><a href="<?php echo base_url(); ?>admin/temporada">Temporadas</a></li>
             <li <?php echo  $pg =='promocion' ? 'class="active"' : '' ?>><a href="<?php echo base_url(); ?>admin/promocion">Promociones</a></li>
+            <li <?php echo  $pg =='usuario' ? 'class="active"' : '' ?>><a href="<?php echo base_url(); ?>admin/usuario">Usuarios</a></li>
           </ul>
           <ul class="nav navbar-nav logout">
             <li><a href="<?php echo base_url(); ?>admin/home/logout">Salir</a></li>

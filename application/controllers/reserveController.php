@@ -1,73 +1,86 @@
 <?php
 
-class reserveController extends CI_Controller{
-	
-	function __construct(){		
-		parent::__construct();		
-		$this->load->helper('url');
-		$this->load->helper('form');
-		$this->load->model('reservas/RoomsTypeModel','roomsType');
-		$this->load->model('reservas/CustomerModel','customer');
-		$this->load->model('reservas/ReserveModel','reserve');
-	}
+class reserveController extends CI_Controller {
 
-	// Funcion principal
-	function index(){	
-				
-		$this->load->view(
-			"vwBookMeIn",
-			array(
-				'selRoomsType'	=> $this->roomsType->getAllTypes(),
-				'allState'		=> $this->roomsType->getAllState()
-			)
-		);		
-	}
+    function __construct() {
+        parent::__construct();
+        $this->load->helper('url');
+        $this->load->helper('form');
+        $this->load->model('usuario_db');
+        $this->load->model('reservas/RoomsTypeModel', 'roomsType');
+        $this->load->model('reservas/CustomerModel', 'customer');
+        $this->load->model('reservas/ReserveModel', 'reserve');
+        $this->load->library('email_class');
+        $this->load->model('reservas/MailModel', 'mail');
+    }
 
-	function saveReserve(){
-		// Se guarda el cliente
-		$customerId = $this->customer->save($this->input->post("customer", TRUE));
-		// Se guarda los datos generales de reserva
-		$reserveId = $this->reserve->save($this->input->post("arriveDate"),$this->input->post("departureDate"),$customerId);
-		//Se guadan la habitaciones seleccionadas
-		$this->reserve->saveXrefRoom($reserveId,$this->input->post("xrefRooms",TRUE));
-		$reserveCode = $this->reserve->getReserveCode($reserveId);
-		
-		header('Content-Type: application/json',true);
-    	echo json_encode(array(
-    		'code' => $reserveCode,
-    		'idReserve' => $reserveId    	
-    	)); 
-	}
-	
-	
-	/**
-	 * Obtiene la disponibilidad de las habitaciones
-	 * return application/json
-	 */
-	function getRoomsAvaliable() {
-    	$arriveDate = $this->input->post('arriveDate');
-    	$departureDate= $this->input->post('departureDate');    	
-    	
-    	$roomsInfo = $this->roomsType->getRoomsAvailability($arriveDate,$departureDate);
-    	$roomsAvailable =  $this->roomsType->getRoomsFree($arriveDate,$departureDate);
-    	
-    	$array = array(
-    		'result' => $roomsInfo,
-    		'available' => $roomsAvailable
-    	);
-    	
-    	header('Content-Type: application/json',true);
-    	echo json_encode($array);    	
-   }
-	
-	/**
-	 * Obtiene la disponibilidad de las habitaciones
-	 * return application/json
-	 */
-	function paySuccess() {
-		
-    	$txn_id = $_POST['item_number'];
-		$this->reserve->updateStatus($txn_id, 2);
-   }
-  
+    // Funcion principal
+    function index() {
+
+        $this->load->view(
+                "vwBookMeIn", array(
+            'selRoomsType' => $this->roomsType->getAllTypes(),
+            'allState' => $this->roomsType->getAllState()
+                )
+        );
+    }
+
+    function saveReserve() {
+        // Se guarda el cliente
+        $customerId = $this->customer->save($this->input->post("customer", TRUE));
+        // Se guarda los datos generales de reserva
+        $reserveId = $this->reserve->save($this->input->post("arriveDate"), $this->input->post("departureDate"), $customerId);
+        //Se guadan la habitaciones seleccionadas
+        $this->reserve->saveXrefRoom($reserveId, $this->input->post("xrefRooms", TRUE));
+        $reserveCode = $this->reserve->getReserveCode($reserveId);
+        //$emails = $this->user->getAllReceiveNotification();
+        $data = $this->usuario_db->getAllReceiveNotification();
+        $this->mail->send_mail($this->input->post("customer", TRUE),$reserveCode,$data);
+        /*$name = 'gengis';
+        $email = 'gengiscb@gmail.com';
+        $subject = 'jnxsn';
+        $message = 'nsjnxjsnx';
+        $email_data = array(
+            'from' => array('name' => 'Admin'),
+            'to' => array('email' => $email, 'name' => $name),
+            'subject' => $subject,
+            'message' => $message
+        );
+        $this->email_class->send_email($email_data);*/
+        header('Content-Type: application/json', true);
+        echo json_encode(array(
+            'code' => $reserveCode,
+            'idReserve' => $reserveId
+        ));
+    }
+
+    /**
+     * Obtiene la disponibilidad de las habitaciones
+     * return application/json
+     */
+    function getRoomsAvaliable() {
+        $arriveDate = $this->input->post('arriveDate');
+        $departureDate = $this->input->post('departureDate');
+
+        $roomsInfo = $this->roomsType->getRoomsAvailability($arriveDate, $departureDate);
+        $roomsAvailable = $this->roomsType->getRoomsFree($arriveDate, $departureDate);
+
+        $array = array(
+            'result' => $roomsInfo,
+            'available' => $roomsAvailable
+        );
+
+        header('Content-Type: application/json', true);
+        echo json_encode($array);
+    }
+
+    /**
+     * Obtiene la disponibilidad de las habitaciones
+     * return application/json
+     */
+    function paySuccess() {
+
+        $txn_id = $_POST['item_number'];
+        $this->reserve->updateStatus($txn_id, 2);
+    }
 }
