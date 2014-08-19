@@ -33,7 +33,35 @@ $(function() {
         loadPanel2(fecha, fechaE);
         SLIDER.next();
     });
-    $("#btnCancelar,#btnAnterior").click(function() {
+    $("#btnSiguiente2").click(function() {
+        if (validateSelect() === true) {
+            $("#msgSelect").remove();
+            $(".bg-danger").hide();
+            SLIDER.next();
+        } else {
+            $(".bg-danger").show("slow");
+        }
+    });
+    $("#btnSiguiente3").click(function() {
+        if (validateCustomerInfo()) {
+            $(".bg-danger").hide();
+            $(".bg-danger2").hide()
+            loadPanel4();
+            SLIDER.next();
+
+        }
+
+    });
+    $("#btnSiguiente4").click(function() {
+        generateReserve();
+        //SLIDER.next();
+    });
+    $("#btnFinalizar").click(function() {
+        cleanAll();
+        SLIDER.next();
+    });
+    $("#btnCancelar,#btnAnterior, #btnAnterior4").click(function() {
+        $(".bg-danger").hide();
         SLIDER.prev();
     });
     $("#btnPreDay").click(function() {
@@ -54,7 +82,7 @@ $(function() {
         getSearchExit();
     });
 
-    $('#txtFechaIni, #txtFechaFin, #txtShowCo').change(function() {
+    $('#txtShowCo').change(function() {
         getSearch();
     });
     $('#startDate').change(function() {
@@ -82,6 +110,8 @@ $(function() {
     // fechas para la reservacion
     changeDate('#startDateBooking', new Date());
     changeDate('#endDateBooking', new Date());
+    changeDate('#startDateConsult', new Date());
+    changeDate('#endDateConsult', new Date());
     $('#startDateBooking').datepicker()
             .on('changeDate', function(ev) {
                 changeDate(this, ev.date);
@@ -91,6 +121,19 @@ $(function() {
             .on('changeDate', function(ev) {
                 changeDate(this, ev.date);
                 $('#endDateBooking').datepicker('hide');
+            });
+
+    $('#startDateConsult').datepicker()
+            .on('changeDate', function(ev) {
+                changeDate(this, ev.date);
+                $('#startDateConsult').datepicker('hide');
+                getSearch();
+            });
+    $('#endDateConsult').datepicker()
+            .on('changeDate', function(ev) {
+                changeDate(this, ev.date);
+                $('#endDateConsult').datepicker('hide');
+                getSearch();
             });
 
     //inicializar selects cuarto reservación
@@ -141,6 +184,8 @@ $(function() {
 
     // Init data
     getSearchEntrance();
+    //clean
+    cleanAll();
 
 });
 
@@ -171,6 +216,9 @@ function setFecha(fechaString, tipoFecha, tipoCambio, dias) {
 }
 
 function loadPanel2(fechaEntrada, fechaSalida) {
+    $("#reserveTotal").html("Total: $ 0.00 " + CURRENCY);
+    adultoXtra = getGuestNumber("selAdults");
+    ninoXtra = getGuestNumber("selChildren");
     $.ajax({
         type: "POST",
         url: "../reserveController/getRoomsAvaliable",
@@ -180,11 +228,11 @@ function loadPanel2(fechaEntrada, fechaSalida) {
             departureDate: fechaSalida
         },
         success: function(data) {
-            console.log(data);
+            //console.log(data);
             var allRooms = (data.length != 0) ? data.result : [];
             var available = (data.length != 0) ? data.available : [];
             var reserveInfo = getDataPanel1();
-            console.log(allRooms);
+            //console.log(allRooms);
             $("#roomConteiner").html(createRoomHeader(allRooms, available, fechaEntrada, fechaSalida));
             loadRoomInfo(reserveInfo, allRooms, available);
         }
@@ -204,9 +252,9 @@ function createRoomHeader(rooms, available, fechaEntrada, fechaSalida) {
         var item = rooms[i];
         $.extend(item, available[i]);
         roomItem += "<div class='roomItem'>" +
-                "<div class='roomTypeName'>" + item.name + "</div>" +
+                "<div class='roomTypeName'><h4>" + item.name + "</h4></div>" +
                 "<div class='roomDescription'>" + item.description + " </div>" +
-                "<div class='roomTable' id='tmpRoom" + item.id + "'>" +
+                "<div class='roomTable ' id='tmpRoom" + item.id + "'>" +
                 "<div class='roomTotal'>Total: </div>" +
                 "</div>";
     }
@@ -218,12 +266,14 @@ function getDataPanel1() {
 
     return {
         'arriveDate': formatFecha(getFecha($('#startDateBooking').attr('data-date'))),
-        'departureDate':formatFecha(getFecha($('#endDateBooking').attr('data-date'))),
+        'departureDate': formatFecha(getFecha($('#endDateBooking').attr('data-date'))),
         'nRooms': $("#selRooms").val(),
         'nAdults': getGuestNumber("selAdults"),
         'nChildren': getGuestNumber("selChildren"),
         'nAdultExtra': 1,
-        'nChildExtra': 1
+        'nChildExtra': 1,
+        'strArriveDate': formatFecha(getFecha($('#startDateBooking').attr('data-date'))),
+        'strDepartureDate': formatFecha(getFecha($('#endDateBooking').attr('data-date')))
     };
 }
 function getGuestNumber(selector) {
@@ -233,6 +283,10 @@ function getGuestNumber(selector) {
         n = $(this).val() * 1 + n;
     });
     return n;
+}
+function loadXtraPeople() {
+    adultoXtra = getGuestNumber("selAdults");
+    ninoXtra = getGuestNumber("selChildren");
 }
 function loadRoomInfo(reserveInfo, rooms, roomsFree) {
 
@@ -261,11 +315,12 @@ function loadRoomInfo(reserveInfo, rooms, roomsFree) {
         $('td:nth-child(13),th:nth-child(13)', "#tmpRoom" + rooms[i].id).hide();
         $('td:nth-child(14),th:nth-child(14)', "#tmpRoom" + rooms[i].id).hide();
         $('td:nth-child(15),th:nth-child(15)', "#tmpRoom" + rooms[i].id).hide();
-        atachTableEvents("#tmpRoom" + rooms[i].id, rooms[i].nRooms, rooms[i].available * 1);
+        atachTableEvents("#tmpRoom" + rooms[i].id, rooms[i].nRooms, parseInt(rooms[i].available) * 1);
+        //console.log(rooms[i].available * 1);
         if (rooms[i].available < 1)
-            $("#tmpRoom" + rooms[i].id).append("<div class='notAvailable' >Sin disponibilidad</div>");
+            $("#tmpRoom" + rooms[i].id).append("<div class='notAvailable text-danger text-right' >Sin disponibilidad</div>");
         else
-            $("#tmpRoom" + rooms[i].id).append("<div class='tRoomPrice' >Total: $ 0.00 " + CURRENCY + "</div><div class='xtraPerson'></div>");
+            $("#tmpRoom" + rooms[i].id).append("<div class='tRoomPrice text-info text-right' >Total: $ 0.00 " + CURRENCY + "</div><div class='xtraPerson text-danger text-right'></div>");
 
     }
 }
@@ -277,7 +332,7 @@ function numberFormatter(val) {
 }
 function getRoomTemplate() {
     var room =
-            "<table class='table'>" +
+            "<table class='tableRooms table table-bordered table-striped'>" +
             "{#foreach $T as row}" +
             "<tr>" +
             "<th> Room Type Id	</th>" +
@@ -295,11 +350,11 @@ function getRoomTemplate() {
             "<th> adultsExtra	</th>" +
             "<th> childrenExtra	</th>" +
             "<th> roomChange	</th>" +
-            "<th> Rooms  </th>" +
-            "<th> Adults		</th>" +
-            "<th> Childrens	</th>" +
-            "<th> Price by room [{$T.row.capacity} persons] </th>" +
-            "<th> Additional		</th>" +
+            "<th> Cuartos  </th>" +
+            "<th> Adultos		</th>" +
+            "<th> Menores	</th>" +
+            "<th> Precio por cuarto [{$T.row.capacity} persons] </th>" +
+            "<th> Adicional		</th>" +
             "<th></th>" +
             "</tr>" +
             "<tr>" +
@@ -406,15 +461,20 @@ function atachTableEvents(tableWrapper, roomsSelected, maxRooms) {
     var allCol = $(tableWrapper).find(".colRooms");
     for (var i = 0; i < allCol.length; i++) {
         var inputs = $(allCol[i]).children();
+        //console.log(maxRooms);
         for (var j = 0; j < inputs.length; j++) {
             var minValue = 1;
-            if (maxRooms == 0)
+            if (maxRooms === 0) {
                 minValue = 0;
+            } else {
+                console.log("mayor")
+            }
             $(inputs[j]).SpinnerControl({
                 typedata: {min: minValue, max: maxRooms, interval: 1},
                 defaultVal: (roomsSelected * 1),
                 //Evento al incrementar
                 onIncrement: function(value) {
+                    //console.log("hola");
                     var row = getRowData(tableWrapper);
                     if (row.roomChange == 0) {
                         $("table .adults", tableWrapper).html(row.capacity * (value - 1));
@@ -510,11 +570,11 @@ function updateXtraValue(tableWrapper) {
             ninoTotal = (adultoXtra + ninoXtra) - capacidadTotal;
         }
         if (adultoTotal > 0)
-            legendXtra = 'Additional Adult: ' + adultoTotal;
+            legendXtra = 'Adulto Adicional : ' + adultoTotal;
         if (adultoTotal > 0 && ninoTotal > 0)
             legendXtra += '<br/>';
         if (ninoTotal > 0)
-            legendXtra += 'Additional Child: ' + ninoTotal;
+            legendXtra += 'Menor Adicional: ' + ninoTotal;
 
         for (var dataPosc in arrayPrice) {
             var rowTemp = getRowData(dataPosc);
@@ -551,10 +611,12 @@ function updateTotalValue(tableWrapper) {
     var total = 0;
     var allTables = $("div[id^='tmpRoom']");
     for (var dataPosc in arrayPrice) {
-        if ($(dataPosc).find(".tableRooms").hasClass("roomSelected"))
+        //console.log($(dataPosc).find(".tableRooms").hasClass("roomSelected"));
+        if ($(dataPosc).find(".tableRooms").hasClass("roomSelected")) {
             total += arrayPrice[dataPosc];
+            //console.log(arrayPrice);
+        }
     }
-
     $("#reserveTotal").data("total", total);
     $("#reserveTotal").html("Total: " + numberFormatter(total) + " " + CURRENCY);
 }
@@ -564,6 +626,179 @@ function getDiferenceDays(date1, date2) {
     if (date1 != null && date2 != null)
         days = (date2.getTime() - date1.getTime()) / (1000 * 60 * 60 * 24);
     return (days == 0) ? 1 : (days * 1);
+}
+var roomReserve = [];
+function loadPanel4() {
+
+    $("#formPaypal").hide();
+    roomReserve = getAllRoomSelected();
+    preReserve = getDataPanel1();
+
+    loadReserveSummary();
+}
+function getAllRoomSelected() {
+
+    var allRooms = $("div[id^='tmpRoom']");
+    var rooms = [];
+    var i = 0;
+    for (var dataPosc in arrayPrice) {
+        if ($(dataPosc).find(".tableRooms").hasClass("roomSelected")) {
+            var objToReserve = getRowData($(dataPosc));
+            objToReserve.newPrice = arrayPrice[dataPosc];
+            rooms.push(objToReserve);
+        }
+        i++;
+    }
+
+    return rooms;
+}
+function getReservePrice(rooms) {
+
+    var price = 0;
+    for (var dataPosc in arrayPrice) {
+        if ($(dataPosc).find(".tableRooms").hasClass("roomSelected"))
+            price += arrayPrice[dataPosc];
+    }
+    return price;
+}
+function loadReserveSummary() {
+
+    var p1 = getDataPanel1();
+    $("#generalData").html(
+            "<span class='titleArrive'>Llegada:</span> <span class='txtArrive'>" + p1.strArriveDate + "</span>" +
+            "<br/><span class='titleDeparture'>Salida: </span> <span class='txtDeparture'>" + p1.strDepartureDate + "</span>"
+            );
+
+    $("#reservePrice").html("Total: " + numberFormatter(getReservePrice(roomReserve)) + " " + CURRENCY);
+    $("#reserveCode").html("Cod. de Reservación: - - - -");
+    var innerHtml = "";
+    var total = 0;
+    for (var i = 0; i < roomReserve.length; i++) {
+        innerHtml += "" +
+                "<div class='roomForPay'>" +
+                "<div class='roomTypeName sumRoom text-success'>" + roomReserve[i].nRooms + " Cuartos. " + roomReserve[i].roomTypeName + "</div>" +
+                "<div class='roomTypeName sumPrice text-success'>" + numberFormatter(roomReserve[i].newPrice) + "</div>" +
+                "<div class='roomDescription sumDesc text-success'>" + roomReserve[i].description + "</div>" +
+                "</div>";
+    }
+
+    $("#roomSummary").html(innerHtml);
+}
+function cleanAll() {
+    $("#arriveDate").val("");
+    $("#departureDate").val("");
+    $("#cName").val("");
+    $("#cPaterno").val("");
+    $("#cMaterno").val("");
+    $("#cAddress").val("");
+    $("#cPhone").val("");
+    $("#reserved").val(0);
+    $("#cEmail").val("");
+    $("#btnSiguiente4").removeAttr("disabled");
+    $(".bg-danger").hide();
+}
+function getCustomerInfo() {
+    return {
+        'name': $.trim($("#cName").val()),
+        'aPaterno': $.trim($("#cPaterno").val()),
+        'aMaterno': $.trim($("#cMaterno").val()),
+        'address': $.trim($("#cAddress").val()),
+        'city': $.trim($("#cCiyt").val()),
+        'state': $.trim($("#cState").val()),
+        'zip': $.trim($("#cZip").val()),
+        'country': $("#cCountry").val(),
+        'phone': $.trim($("#cPhone").val()),
+        'email': $.trim($("#cEmail").val())
+    };
+}
+function validateCustomerInfo() {
+    if ($("#cName").val() == '' ||
+            $("#cPaterno").val() == '' ||
+            $("#cAddress").val() == '' ||
+            $("#cPhone").val() == '' ||
+            $("#cEmail").val() == '') {
+        $(".bg-danger").show("slow");
+        return false;
+    }
+    if (!validateEmail($("#cEmail").val())) {
+        $(".bg-danger2").show("slow");
+        return false;
+    }
+    return true;
+}
+function validateEmail(email) {
+    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
+}
+function generateReserve() {
+
+    var reserved = $("#reserved").val() * 1;
+    $("#newReserve").remove();
+
+    if (reserved == 0) {
+        //$("#msgLoading").remove();
+        //$("#msg").append("<p id='msgLoading' style='color:red'>Generando Reservacion...</p>");
+        $(".bg-danger").show("slow");
+        $("#btnSiguiente4").attr("disabled", "disabled");
+        $.post("../reserveController/saveReserve", {
+            'customer': $.toJSON(getCustomerInfo()),
+            'xrefRooms': $.toJSON(getXrefRoomReserve(roomReserve)),
+            'arriveDate': preReserve.arriveDate,
+            'departureDate': preReserve.departureDate
+
+        }, function(jsonData) {
+
+            var reserveCode = jsonData.code;
+            var reserveId = jsonData.reserveId;
+            //$("#msgLoading").remove();
+            $(".bg-danger").hide();
+            $("#reserved").val(1);
+            $("#reserveCode").css({fontWeight: 'bold'})
+            $("#reserveCode").html("Cod. de Reservation: <span style='color:red'># " + reserveCode + "</div>");
+            addPayPalInfo(reserveCode);
+
+            $("#btnSiguiente4, #btnAnterior4").fadeOut(300, function() {
+                $("#formPaypal").fadeIn(300);
+            });
+
+        }, "json"
+                );
+    }
+}
+function addPayPalInfo(reserveCode) {
+    $("#ppItemName").val("Reservation " + roomReserve.length + " room(s)");
+    $("#ppItemNumber").val(reserveCode);
+    $("#ppAmount").val(numberFormatter(getReservePrice(roomReserve)));
+}
+/**
+ * 
+ * @param roomReserve
+ * @returns {Array}
+ */
+function getXrefRoomReserve(roomReserve) {
+    var xref = [];
+    for (var i = 0; i < roomReserve.length; i++) {
+        xref.push({
+            'roomId': roomReserve[i].roomId,
+            'price': roomReserve[i].newPrice,
+            'quantity': roomReserve[i].nRooms,
+            'priceType': roomReserve[i].priceType,
+            'priceTypeId': roomReserve[i].priceTypeId
+
+        });
+    }
+    return xref;
+}
+
+function validateSelect() {
+    var valid = false;
+    var allTables = $("div[id^='tmpRoom']");
+    for (var i = 0; i < allTables.length; i++) {
+        if ($(allTables[i]).find(".tableRooms").hasClass("roomSelected")) {
+            valid = true;
+        }
+    }
+    return valid;
 }
 
 /**
@@ -694,21 +929,24 @@ function reloadSearch() {
  * Obtiene la busqueda de los registros activos del catalogo
  */
 function getSearch(pagina) {
-    console.log($("#txtFechaIni").val());
+    console.log($("#txtShowCo").is(':checked'));
     $.ajax({
         type: "POST",
         url: "reservacion/getSearch",
         dataType: 'json',
         data: {
             texto: $("#txtSearch").val(),
-            fechaIni: $("#txtFechaIni").val(),
-            fechaFin: $("#txtFechaFin").val(),
+            fechaIni: $('#startDateConsult').attr('data-date'),
+            fechaFin: $('#endDateConsult').attr('data-date'),
             showCo: $("#txtShowCo").is(':checked'),
             pagina: ((typeof pagina == 'undefined') ? 1 : pagina)
         },
         success: function(data) {
             setRowTable(data.data);
             setPaginator(data.pagina, data.total);
+            console.log(data.pagina);
+            console.log(data.total);
+
         }
     });
 }
@@ -717,7 +955,7 @@ function getSearch(pagina) {
  * Obtiene la busqueda de los registros activosy de entrada del dia en el catalogo
  */
 function getSearchEntrance(pagina) {
-    console.log($('#startDate').attr('data-date'));
+    //console.log($('#startDate').attr('data-date'));
     $.ajax({
         type: "POST",
         url: "reservacion/getSearchEntrance",

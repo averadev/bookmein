@@ -41,8 +41,8 @@ Class reservacion_db extends CI_MODEL
             $this->db->where("reservacion.fechaSalida > '".$fechaIni."'");
         }if ($fechaFin != ""){
             $this->db->where("reservacion.fechaLlegada < '".$fechaFin."'");
-        }if ($showCo != "true"){
-            $this->db->where('reservacion.estadoReservacionId <> 4');
+        }if ($showCo == "true"){
+            $this->db->where('reservacion.estadoReservacionId = 4');
         }if ($pagina > 0){
             $this->db->limit(10, (($pagina - 1)*10));
         }
@@ -60,8 +60,13 @@ Class reservacion_db extends CI_MODEL
         $this->db->join('cat_status_reservacion', 'reservacion.estadoReservacionId = cat_status_reservacion.id');
         $this->db->where('reservacion.estadoReservacionId > 0');
         $this->db->where("(clientes.completo like '%".$texto."%' OR reservacion.codigo like '%".$texto."%' )");
-        if ($showCo != "true"){
-            $this->db->where('reservacion.estadoReservacionId <> 4');
+        if ($fechaIni != ""){
+            $this->db->where("reservacion.fechaSalida > '".$fechaIni."'");
+        }if ($fechaFin != ""){
+            $this->db->where("reservacion.fechaLlegada < '".$fechaFin."'");
+        }
+        if ($showCo == "true"){
+            $this->db->where('reservacion.estadoReservacionId = 4');
         }
         return  $this->db->get()->result();
     }
@@ -73,8 +78,8 @@ Class reservacion_db extends CI_MODEL
         $this->db->from('reservacion');
         $this->db->join('clientes', 'reservacion.clienteId = clientes.id');
         $this->db->join('cat_status_reservacion', 'reservacion.estadoReservacionId = cat_status_reservacion.id');
-        $this->db->where('reservacion.estadoReservacionId = 2');
-        $this->db->where("reservacion.fechaLlegada = '".$fecha."'");
+        $this->db->where('reservacion.estadoReservacionId <= 2');
+        $this->db->where("reservacion.fechaLlegada = '".$fecha."' ORDER BY cat_status_reservacion.id DESC");
         if ($pagina > 0){
             $this->db->limit(10, (($pagina - 1)*10));
         }

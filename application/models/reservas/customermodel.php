@@ -8,9 +8,10 @@ class CustomerModel extends CI_Model {
             'nombre' => $customer->name,
             'ap_paterno' => $customer->aPaterno,
             'ap_materno' => $customer->aMaterno,
-            'completo' => $customer->name . " " . $customer->aPaterno . " " . $customer->aMaterno,
+            'completo' => $customer->name . " " . $customer->aPaterno,
             'telefono' => $customer->phone,
-            'email' => $customer->email
+            'email' => $customer->email,
+            'apellido' =>$customer->aPaterno
         );
 
         $this->db->insert("clientes", $data);

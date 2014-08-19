@@ -20,6 +20,7 @@
      <link href="<?php echo HTTP_CSS_PATH; ?>datepicker.css" rel="stylesheet">
      <link href="<?php echo HTTP_CSS_PATH; ?>typeahead.css" rel="stylesheet">
      <link href="<?php echo HTTP_CSS_PATH; ?>admin.css" rel="stylesheet">
+     <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/reservas/css/plugins/spinnercontrol/jquery.spinnercontrol.css"/>
   </head>
 <body>
     <?php

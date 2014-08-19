@@ -14,7 +14,7 @@ class contacto extends CI_Controller {
      * Envia email de contacto
      */
     public function sendEmail(){
-        $to = "gengiscb@gmail.com";
+        $to = "fortalezasuites@hotmail.com";
         $subject = "Email desde pagina de contacto";
         $body = "Nombre: ".$_POST['txtNombre']."\r\n";
         $body .= "Telefono: ".$_POST['txtTelefono']."\r\n";
