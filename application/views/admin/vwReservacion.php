@@ -24,20 +24,20 @@ $this->load->view('admin/vwHeader');
             </ul>
 
             <!-- Tab panes -->
-            <div class="tab-content">
+            <div class="tab-content" style="margin-top:20px;">
                 <div class="tab-pane active" id="entrada">
                     <div class="input-group" style="margin-top:10px;">
                         <table>
                             <tr>
                                 <td>
-                                    <span ><a id="btnPreDay" href='#' title='View' class="btn btn-info btnPrev"><i class="fancybox-prev"></i> Anterior</a></span>
+                                    <span ><input id="btnPreDay" type="image" src="<?php echo base_url().IMG; ?>icons/arrow-previous-icon.png" name="image" width="40" height="40"><!--<a id="btnPreDay" href='#' title='View' class="btn btn-info btnPrev"><i class="fancybox-prev"></i> Anterior</a>--></span>
                                 </td>
                                 <td>
                                     <a href="#"  class="btn small" id="startDate" style="padding: 6px 0;" data-date-format="yyyy-mm-dd" data-date="2014-03-03"><span class="redPoint">*</span>Fecha:</a>
                                     <span></span>
                                 </td>
                                 <td>
-                                    <span ><a href='#' id="btnNextDay" title='View' class="btn btn-info btnPrev"><i class="fancybox-prev"></i> Siguiente</a></span>
+                                    <span ><input id="btnNextDay" type="image" src="<?php echo base_url().IMG; ?>icons/arrow-next-icon.png" name="image" width="40" height="40"><!--<a href='#' id="btnNextDay" title='View' class="btn btn-info btnPrev"><i class="fancybox-prev"></i> Siguiente</a>--></span>
                                 </td>
                             </tr>
 
@@ -77,14 +77,14 @@ $this->load->view('admin/vwHeader');
                         <table>
                             <tr>
                                 <td>
-                                    <span ><a id="btnPreDayExit" href='#' title='View' class="btn btn-info btnPrev"><i class="fancybox-prev"></i> Anterior</a></span>
+                                    <span ><input id="btnPreDayExit" type="image" src="<?php echo base_url().IMG; ?>icons/arrow-previous-icon.png" name="image" width="40" height="40"><!--<a  href='#' title='View' class="btn btn-info btnPrev"><i class="fancybox-prev"></i> Anterior</a>--></span>
                                 </td>
                                 <td>
                                     <a href="#" class="btn small" id="endDate" style="padding: 6px 0;" data-date-format="yyyy-mm-dd" data-date="2014-03-20"><span class="redPoint">*</span>Fecha:</a>
                                     <span></span>
                                 </td>
                                 <td>
-                                    <span ><a id="btnNexDayExit" href='#' title='View' class="btn btn-info btnPrev"><i class="fancybox-prev"></i> Siguiente</a></span>
+                                    <span ><input id="btnNexDayExit" type="image" src="<?php echo base_url().IMG; ?>icons/arrow-next-icon.png" name="image" width="40" height="40"><!--<a id="btnNexDayExit" href='#' title='View' class="btn btn-info btnPrev"><i class="fancybox-prev"></i> Siguiente</a>--></span>
                                 </td>
                             </tr>
                         </table>

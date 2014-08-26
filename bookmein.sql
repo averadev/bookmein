@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 06-08-2014 a las 02:01:28
+-- Tiempo de generación: 26-08-2014 a las 23:41:32
 -- Versión del servidor: 5.6.16
 -- Versión de PHP: 5.5.11
 
@@ -138,7 +138,7 @@ CREATE TABLE IF NOT EXISTS `ci_sessions` (
 --
 
 INSERT INTO `ci_sessions` (`session_id`, `ip_address`, `user_agent`, `last_activity`, `user_data`) VALUES
-('5beaefc746c0d9488709c72954679906', '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/36.0.1985.125 Safari/537.36', 1407283201, 'a:6:{s:9:"user_data";s:0:"";s:2:"id";s:1:"1";s:8:"username";s:4:"demo";s:5:"email";s:22:"abhishek@devzone.co.in";s:14:"is_admin_login";b:1;s:9:"user_type";s:2:"SA";}');
+('2d2743ed1fffc79ae4c0e453d56f4382', '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Firefox/31.0', 1409011492, '');
 
 -- --------------------------------------------------------
 
@@ -154,62 +154,92 @@ CREATE TABLE IF NOT EXISTS `clientes` (
   `completo` varchar(255) DEFAULT NULL,
   `telefono` varchar(25) DEFAULT NULL,
   `email` varchar(45) DEFAULT NULL,
+  `apellido` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=50 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=79 ;
 
 --
 -- Volcado de datos para la tabla `clientes`
 --
 
-INSERT INTO `clientes` (`id`, `nombre`, `ap_paterno`, `ap_materno`, `completo`, `telefono`, `email`) VALUES
-(1, 'Jimmy', 'Pat', '', 'Jimmy Pat ', '123456789', 'libr@hotmail.com'),
-(2, 'Juan', 'Perez', '', 'Juan Perez ', '123456789', 'juanperez@gmail.com'),
-(3, 'Herneto', 'Pat', '', 'Herneto Pat ', '123456789', 'libr@hotmail.com'),
-(4, 'Popeye', 'Perez', '', 'Popeye Perez ', '123456789', 'juanperez@gmail.com'),
-(6, 'Jose', 'Pat', '', 'Jose Pat ', '123456789', 'libr@hotmail.com'),
-(7, 'Antonio', 'Perez', '', 'Antonio Perez ', '123456789', 'juanperez@gmail.com'),
-(8, 'Alberto', 'Vera', 'Espitia', 'Alberto Vera Espitia', '787878', 'mrfeto@gmail.com'),
-(9, 'Andrea', 'Espitia', 'Mancera', 'Andrea Espitia Mancera', '87894564', 'correo@mail.com'),
-(10, 'Veronica', 'Vera', 'Espitia', 'Veronica Vera Espitia', '89748561', 'correo@gmail.com'),
-(11, 'Veronica', 'Vera', 'Espitia', 'Veronica Vera Espitia', '89748561', 'correo@gmail.com'),
-(12, 'Veronica', 'Vera', 'Espitia', 'Veronica Vera Espitia', '89748561', 'correo@gmail.com'),
-(13, 'Veronica', 'Vera', 'Espitia', 'Veronica Vera Espitia', '89748561', 'correo@gmail.com'),
-(14, 'Andrew', 'Perez', 'Ruiz', 'Andrew Perez Ruiz', '95262632', 'correo@mail.com'),
-(15, 'Miriam', 'Angeles', 'Perez', 'Miriam Angeles Perez', '01-898-5452', 'mail@correo.com'),
-(16, 'Alberto', 'Vera', 'Espitia', 'Alberto Vera Espitia', '8745-5451', 'mail@gmail.com'),
-(17, 'Mario', 'Smith', 'Obrian', 'Mario Smith Obrian', '9523121', 'mail@secure.com'),
-(18, 'Alberto', 'Vera', 'Espitia', 'Alberto Vera Espitia', '998-784-9856', 'mrfeto@gmail.com'),
-(19, 'Maria Pilar', 'Ruiz', 'Guitierrez', 'Maria Pilar Ruiz Guitierrez', '789-45645-65456', 'maria@gmail.com'),
-(20, 'albe', 'wdssd', 'fsfd', 'albe wdssd fsfd', '54545645', 'mail@mail.com'),
-(21, 'as', 'asas', 'asas', 'as asas asas', 'sasas', 'qqwæ@xdsd.com'),
-(22, 'sas', 'asasasa', 'sasas', 'sas asasasa sasas', 'sas', 'as@zsas.com'),
-(23, 'Alberto', 'Vera', 'Esptitia', 'Alberto Vera Esptitia', '998-888-9999', 'email@gmail.com'),
-(24, 'sas', 'asas', 'asa', 'sas asas asa', 'asas', 'as@sasss.com'),
-(25, 'asdsad', 'dsadasd', 'asdasd', 'asdsad dsadasd asdasd', 'sdadas', 'sad@dsdsd.com'),
-(26, 'Gengis', 'Cetina', '', 'Gengis Cetina ', '1234567890', 'gengiscb@gmail.com'),
-(27, 'asas', 'as', 'as', 'asas as as', 'asasas', 'as@asdasd.com'),
-(28, 'asas', 'asas', 'sasas', 'asas asas sasas', 'asas', 'asas@asas.com'),
-(29, 'Gengis', 'Cetina', 'B.', 'Gengis Cetina B.', '9981000000', 'gengiscb@gmail.com'),
-(30, 'Gengis', 'Cetina', 'B', 'Gengis Cetina B', '23123123213', 'gengiscb@gmail.com'),
-(31, 'gen', 'sdcsc', 'fdf', 'gen sdcsc fdf', '45454545', 'gengiscb@gmail.com'),
-(32, 'sddq', 'ddq', 'dsdsd', 'sddq ddq dsdsd', '113515156', 'gengiscb@gmail.com'),
-(33, 'cvqvfvf', 'fdfd', 'fdfd', 'cvqvfvf fdfd fdfd', 'ddfdf', 'gengiscb@gmail.com'),
-(34, 'cdcw', 'dcdc', 'cdcd', 'cdcw dcdc cdcd', '65456465465', 'gengiscb@gmail.com'),
-(35, 'xsxs', 'xs', 'xs', 'xsxs xs xs', '427285275', 'gengiscb@gmail.com'),
-(36, 'gengis', 'ckmck', 'kcdkm', 'gengis ckmck kcdkm', '616545456', 'gengiscb@gmail.com'),
-(37, 'Gengis', 'Cetina', 'Balam', 'Gengis Cetina Balam', '99951554', 'gengiscb@gmail.com'),
-(38, 'Gengis', 'Cetina', 'Balam', 'Gengis Cetina Balam', '99810000000', 'gengiscb@gmail.com'),
-(39, 'gengis', 'cet', 'bal', 'gengis cet bal', '99880000', 'gengiscb@gmail.com'),
-(40, 'eede', 'dee', 'dede', 'eede dee dede', '59595959', 'gengiscb@gmail.com'),
-(41, 'dsds', 'dsd', 'dsd', 'dsds dsd dsd', '1232323', 'gengiscb@gmail.com'),
-(42, 'ssds', 'dsds', 'dsds', 'ssds dsds dsds', '1565454554', 'gengiscb@gmail.com'),
-(43, 'swsw', 'swsw', 'sws', 'swsw swsw sws', '456464564', 'gengiscb@gmail.com'),
-(44, 'dsds', 'dsd', 'dads', 'dsds dsd dads', '1656556', 'gengiscb@gmial.com'),
-(45, 'dde', 'de', 'edw', 'dde de edw', '233234234', 'gengiscb@gmail.com'),
-(46, 'Gengis', 'Cetina', 'B.', 'Gengis Cetina B.', '998800000', 'gengiscb@gmail.com'),
-(47, 'Prueba', 'otra', 'otra', 'Prueba otra otra', '546546555', 'prueba@gmail.com'),
-(48, 'sws', 'swsw', 'sws', 'sws swsw sws', '5645455|', 'otra@gmail.com'),
-(49, 'swsw', 'ddsd', 'dsds', 'swsw ddsd dsds', '23424', 'uno@gmail.com');
+INSERT INTO `clientes` (`id`, `nombre`, `ap_paterno`, `ap_materno`, `completo`, `telefono`, `email`, `apellido`) VALUES
+(1, 'Jimmy', 'Pat', '', 'Jimmy Pat ', '123456789', 'libr@hotmail.com', NULL),
+(2, 'Juan', 'Perez', '', 'Juan Perez ', '123456789', 'juanperez@gmail.com', NULL),
+(3, 'Herneto', 'Pat', '', 'Herneto Pat ', '123456789', 'libr@hotmail.com', NULL),
+(4, 'Popeye', 'Perez', '', 'Popeye Perez ', '123456789', 'juanperez@gmail.com', NULL),
+(6, 'Jose', 'Pat', '', 'Jose Pat ', '123456789', 'libr@hotmail.com', NULL),
+(7, 'Antonio', 'Perez', '', 'Antonio Perez ', '123456789', 'juanperez@gmail.com', NULL),
+(8, 'Alberto', 'Vera', 'Espitia', 'Alberto Vera Espitia', '787878', 'mrfeto@gmail.com', NULL),
+(9, 'Andrea', 'Espitia', 'Mancera', 'Andrea Espitia Mancera', '87894564', 'correo@mail.com', NULL),
+(10, 'Veronica', 'Vera', 'Espitia', 'Veronica Vera Espitia', '89748561', 'correo@gmail.com', NULL),
+(11, 'Veronica', 'Vera', 'Espitia', 'Veronica Vera Espitia', '89748561', 'correo@gmail.com', NULL),
+(12, 'Veronica', 'Vera', 'Espitia', 'Veronica Vera Espitia', '89748561', 'correo@gmail.com', NULL),
+(13, 'Veronica', 'Vera', 'Espitia', 'Veronica Vera Espitia', '89748561', 'correo@gmail.com', NULL),
+(14, 'Andrew', 'Perez', 'Ruiz', 'Andrew Perez Ruiz', '95262632', 'correo@mail.com', NULL),
+(15, 'Miriam', 'Angeles', 'Perez', 'Miriam Angeles Perez', '01-898-5452', 'mail@correo.com', NULL),
+(16, 'Alberto', 'Vera', 'Espitia', 'Alberto Vera Espitia', '8745-5451', 'mail@gmail.com', NULL),
+(17, 'Mario', 'Smith', 'Obrian', 'Mario Smith Obrian', '9523121', 'mail@secure.com', NULL),
+(18, 'Alberto', 'Vera', 'Espitia', 'Alberto Vera Espitia', '998-784-9856', 'mrfeto@gmail.com', NULL),
+(19, 'Maria Pilar', 'Ruiz', 'Guitierrez', 'Maria Pilar Ruiz Guitierrez', '789-45645-65456', 'maria@gmail.com', NULL),
+(20, 'albe', 'wdssd', 'fsfd', 'albe wdssd fsfd', '54545645', 'mail@mail.com', NULL),
+(21, 'as', 'asas', 'asas', 'as asas asas', 'sasas', 'qqwæ@xdsd.com', NULL),
+(22, 'sas', 'asasasa', 'sasas', 'sas asasasa sasas', 'sas', 'as@zsas.com', NULL),
+(23, 'Alberto', 'Vera', 'Esptitia', 'Alberto Vera Esptitia', '998-888-9999', 'email@gmail.com', NULL),
+(24, 'sas', 'asas', 'asa', 'sas asas asa', 'asas', 'as@sasss.com', NULL),
+(25, 'asdsad', 'dsadasd', 'asdasd', 'asdsad dsadasd asdasd', 'sdadas', 'sad@dsdsd.com', NULL),
+(26, 'Gengis', 'Cetina', '', 'Gengis Cetina ', '1234567890', 'gengiscb@gmail.com', NULL),
+(27, 'asas', 'as', 'as', 'asas as as', 'asasas', 'as@asdasd.com', NULL),
+(28, 'asas', 'asas', 'sasas', 'asas asas sasas', 'asas', 'asas@asas.com', NULL),
+(29, 'Gengis', 'Cetina', 'B.', 'Gengis Cetina B.', '9981000000', 'gengiscb@gmail.com', NULL),
+(30, 'Gengis', 'Cetina', 'B', 'Gengis Cetina B', '23123123213', 'gengiscb@gmail.com', NULL),
+(31, 'gen', 'sdcsc', 'fdf', 'gen sdcsc fdf', '45454545', 'gengiscb@gmail.com', NULL),
+(32, 'sddq', 'ddq', 'dsdsd', 'sddq ddq dsdsd', '113515156', 'gengiscb@gmail.com', NULL),
+(33, 'cvqvfvf', 'fdfd', 'fdfd', 'cvqvfvf fdfd fdfd', 'ddfdf', 'gengiscb@gmail.com', NULL),
+(34, 'cdcw', 'dcdc', 'cdcd', 'cdcw dcdc cdcd', '65456465465', 'gengiscb@gmail.com', NULL),
+(35, 'xsxs', 'xs', 'xs', 'xsxs xs xs', '427285275', 'gengiscb@gmail.com', NULL),
+(36, 'gengis', 'ckmck', 'kcdkm', 'gengis ckmck kcdkm', '616545456', 'gengiscb@gmail.com', NULL),
+(37, 'Gengis', 'Cetina', 'Balam', 'Gengis Cetina Balam', '99951554', 'gengiscb@gmail.com', NULL),
+(38, 'Gengis', 'Cetina', 'Balam', 'Gengis Cetina Balam', '99810000000', 'gengiscb@gmail.com', NULL),
+(39, 'gengis', 'cet', 'bal', 'gengis cet bal', '99880000', 'gengiscb@gmail.com', NULL),
+(40, 'eede', 'dee', 'dede', 'eede dee dede', '59595959', 'gengiscb@gmail.com', NULL),
+(41, 'dsds', 'dsd', 'dsd', 'dsds dsd dsd', '1232323', 'gengiscb@gmail.com', NULL),
+(42, 'ssds', 'dsds', 'dsds', 'ssds dsds dsds', '1565454554', 'gengiscb@gmail.com', NULL),
+(43, 'swsw', 'swsw', 'sws', 'swsw swsw sws', '456464564', 'gengiscb@gmail.com', NULL),
+(44, 'dsds', 'dsd', 'dads', 'dsds dsd dads', '1656556', 'gengiscb@gmial.com', NULL),
+(45, 'dde', 'de', 'edw', 'dde de edw', '233234234', 'gengiscb@gmail.com', NULL),
+(46, 'Gengis', 'Cetina', 'B.', 'Gengis Cetina B.', '998800000', 'gengiscb@gmail.com', NULL),
+(47, 'Prueba', 'otra', 'otra', 'Prueba otra otra', '546546555', 'prueba@gmail.com', NULL),
+(48, 'sws', 'swsw', 'sws', 'sws swsw sws', '5645455|', 'otra@gmail.com', NULL),
+(49, 'swsw', 'ddsd', 'dsds', 'swsw ddsd dsds', '23424', 'uno@gmail.com', NULL),
+(50, 'gengiss', 'cetina', 'b', 'gengiss cetina b', '99880000000', 'gengis@gmail.com', NULL),
+(51, 'd', 'de', 'de', 'd de de', '155115', 'gen@mail.com', NULL),
+(52, 'sw', 'sw', 'sw', 'sw sw sw', '55454', 'ddd@dddd.com', NULL),
+(53, 'dsd', 'dsd', 'ds', 'dsd dsd ds', '5564646', 'gen@gmail.com', NULL),
+(54, 'dde', 'de', 'de', 'dde de de', '54554', 'ndnbd@mkmn.com', NULL),
+(55, 'dccd', 'cdc', 'cd', 'dccd cdc cd', '145665', 'dcd@dddd.com', NULL),
+(56, 'd', 'de', 'de', 'd de de', '51545', 'dede@gmail.com', NULL),
+(57, 'Gengis', 'Cetina', 'Balam', 'Gengis Cetina Balam', '988000000', 'gen@gmail.com', NULL),
+(58, 'dcd', 'cd', 'cd', 'dcd cd cd', 'cd', 'cd', NULL),
+(59, 'de', 'de', 'de', 'de de de', 'de', 'de', NULL),
+(60, 'de', 'de', 'de', 'de de de', 'de', 'de', NULL),
+(61, 'de', 'de', 'de', 'de de de', 'de', 'de', NULL),
+(62, 'de', 'de', 'de', 'de de de', 'de', 'de', NULL),
+(63, 'dcd', 'cd', 'cd', 'dcd cd cd', 'cd', 'cd', NULL),
+(64, 'dsept', 'setp', 'spt', 'dsept setp spt', '7878', 'dhdh@mail.com', NULL),
+(65, 'xs', 'xs', 'xs', 'xs xs xs', 'xs', 'xssx@xsxs.xsx', NULL),
+(66, 'xs', 'xs', 'xs', 'xs xs xs', 'xs', 'xsxs@cdc.com', NULL),
+(67, 'cd', 'cd', 'cd', 'cd cd cd', 'cd', 'cd@mail.com', NULL),
+(68, 'jkl', 'kjljkl', 'jljkljklj', 'jkl kjljkl jljkljklj', 'ljljkljkl', 'kljkljk@dadad.com', NULL),
+(69, 'cd', 'cd', '', 'cd cd', 'cd', 'cdxs@mail.com', 'cd'),
+(70, 'aa', 'bb', 'cc', 'aa bb', '54954', 'mail@mail.com', 'bb'),
+(71, 'xx', 'xs', 'xs', 'xx xs', 'xs', 'xss@xsx.com', 'xs'),
+(72, 'dcd', 'cd', '', 'dcd cd', 'cd', 'cdc@mail.com', 'cd'),
+(73, 'dcd', 'cd', '', 'dcd cd', 'cd', 'cdc@mail.com', 'cd'),
+(74, 'dcd', 'cd', '', 'dcd cd', 'cd', 'cdc@mail.com', 'cd'),
+(75, 'cdcd', 'cdc', '', 'cdcd cdc', 'cd', 'cdcd@ccdcd.com', 'cdc'),
+(76, 'Gengis', 'Cetina B.', '', 'Gengis Cetina B.', '9988000000', 'gengis@mail.com', 'Cetina B.'),
+(77, 'xs', 'xs', '', 'xs xs', 'x', 'xs@mail.com', 'xs'),
+(78, 'cdc', 'cdcd', '', 'cdc cdcd', 'scd', 'cdds@mail.com', 'cdcd');
 
 -- --------------------------------------------------------
 
@@ -290,9 +320,9 @@ CREATE TABLE IF NOT EXISTS `habitacion` (
 --
 
 INSERT INTO `habitacion` (`id`, `nombre`, `descripcion`, `precioStd`, `precioAdultoExtra`, `precioNinioExtra`, `capacidadStd`, `disponibilidad`, `status`) VALUES
-(7, 'Habitación San Justo', 'Recamara interior sin ventana, cama queen-size.', 128, 0, 0, 2, 1, 1),
-(8, 'Habitación Sol', 'Recamara interior, cama queen-size con ventana al patio interior.', 128, 0, 0, 2, 1, 1),
-(9, 'Habitación Luna', 'Recamara interior, cama queen-size con ventana al patio interior.', 128, 0, 0, 2, 1, 1),
+(7, 'Habitación San Justo', 'Recamara interior sin ventana, cama queen-size.', 128, 180, 0, 2, 3, 1),
+(8, 'Habitación Sol', 'Recamara interior, cama queen-size con ventana al patio interior.', 128, 0, 0, 2, 3, 1),
+(9, 'Habitación Luna', 'Recamara interior, cama queen-size con ventana al patio interior.', 128, 0, 0, 2, 3, 1),
 (10, 'Habitación San Jose', 'Recamara interior sin ventana, 2 camas queen-size, espaciosa.', 149, 0, 0, 4, 1, 1),
 (11, 'Habitación Princesa', 'Recamara interior sin ventana, cama queen-size.', 128, 0, 0, 2, 1, 1),
 (12, 'Habitación San Felipe', 'Recamara interior sin ventana, 2 camas queen-size.', 149, 0, 0, 4, 1, 1),
@@ -340,7 +370,7 @@ CREATE TABLE IF NOT EXISTS `reservacion` (
   `fechaSalida` datetime NOT NULL,
   `estadoReservacionId` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=47 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=76 ;
 
 --
 -- Volcado de datos para la tabla `reservacion`
@@ -384,7 +414,36 @@ INSERT INTO `reservacion` (`id`, `codigo`, `clienteId`, `fechaLlegada`, `fechaSa
 (43, '1043', 46, '2014-08-20 00:00:00', '2014-08-22 00:00:00', 1),
 (44, '1044', 47, '2014-09-24 00:00:00', '2014-08-26 00:00:00', 1),
 (45, '1045', 48, '2014-08-12 00:00:00', '2014-08-14 00:00:00', 1),
-(46, '1046', 49, '2014-08-19 00:00:00', '2014-08-21 00:00:00', 1);
+(46, '1046', 49, '2014-08-19 00:00:00', '2014-08-21 00:00:00', 1),
+(47, '1047', 50, '2014-08-13 00:00:00', '2014-08-15 00:00:00', 1),
+(48, '1048', 51, '2014-08-13 00:00:00', '2014-08-14 00:00:00', 1),
+(49, '1049', 52, '2014-08-14 00:00:00', '2014-08-17 00:00:00', 1),
+(50, '1050', 53, '2014-08-20 00:00:00', '2014-08-21 00:00:00', 1),
+(51, '1051', 54, '2014-08-29 00:00:00', '2014-08-31 00:00:00', 1),
+(52, '1052', 55, '2014-08-29 00:00:00', '2014-08-31 00:00:00', 4),
+(53, '1053', 56, '2014-08-16 00:00:00', '2014-08-18 00:00:00', 1),
+(54, '1054', 57, '2014-08-14 00:00:00', '2014-08-14 00:00:00', 1),
+(55, '1055', 58, '2014-08-22 00:00:00', '2014-08-25 00:00:00', 1),
+(56, '1056', 59, '2014-08-14 00:00:00', '2014-08-14 00:00:00', 1),
+(57, '1057', 60, '2014-08-14 00:00:00', '2014-08-14 00:00:00', 1),
+(58, '1058', 61, '2014-08-14 00:00:00', '2014-08-14 00:00:00', 1),
+(59, '1059', 62, '2014-08-14 00:00:00', '2014-08-14 00:00:00', 1),
+(60, '1060', 63, '2014-08-14 00:00:00', '2014-08-14 00:00:00', 1),
+(61, '1061', 64, '2014-09-01 00:00:00', '2014-09-03 00:00:00', 1),
+(62, '1062', 65, '2014-08-14 00:00:00', '2014-08-14 00:00:00', 1),
+(63, '1063', 66, '2014-08-15 00:00:00', '2014-08-15 00:00:00', 1),
+(64, '1064', 67, '2014-08-15 00:00:00', '2014-08-15 00:00:00', 1),
+(65, '1065', 68, '2014-08-18 00:00:00', '2014-08-18 00:00:00', 1),
+(66, '1066', 69, '2014-08-19 00:00:00', '2014-08-19 00:00:00', 1),
+(67, '1067', 70, '2014-08-22 00:00:00', '2014-08-24 00:00:00', 1),
+(68, '1068', 71, '2014-08-20 00:00:00', '2014-08-22 00:00:00', 1),
+(69, '1069', 72, '2014-08-19 00:00:00', '2014-08-19 00:00:00', 1),
+(70, '1070', 73, '2014-08-19 00:00:00', '2014-08-19 00:00:00', 1),
+(71, '1071', 74, '2014-08-19 00:00:00', '2014-08-19 00:00:00', 1),
+(72, '1072', 75, '2014-08-29 00:00:00', '2014-08-31 00:00:00', 1),
+(73, '1073', 76, '2014-08-29 00:00:00', '2014-08-30 00:00:00', 1),
+(74, '1074', 77, '2014-08-20 00:00:00', '2014-08-20 00:00:00', 1),
+(75, '1075', 78, '2015-01-14 00:00:00', '2015-01-16 00:00:00', 1);
 
 -- --------------------------------------------------------
 
@@ -780,7 +839,7 @@ CREATE TABLE IF NOT EXISTS `xref_habitacion_reservacion` (
   `cantidad` int(11) NOT NULL,
   `promocionId` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=47 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=82 ;
 
 --
 -- Volcado de datos para la tabla `xref_habitacion_reservacion`
@@ -832,7 +891,42 @@ INSERT INTO `xref_habitacion_reservacion` (`id`, `reservacionId`, `habitacionId`
 (43, 43, 8, 256, 1, 0),
 (44, 44, 8, -3712, 1, 0),
 (45, 45, 7, 256, 1, 0),
-(46, 46, 10, 298, 1, 0);
+(46, 46, 10, 298, 1, 0),
+(47, 47, 8, 256, 1, 0),
+(48, 48, 9, 128, 1, 0),
+(49, 49, 10, 447, 1, 0),
+(50, 50, 9, 128, 1, 0),
+(51, 51, 7, 256, 1, 0),
+(52, 52, 8, 256, 1, 0),
+(53, 53, 7, 256, 1, 0),
+(54, 53, 8, 256, 1, 0),
+(55, 53, 17, 498, 1, 0),
+(56, 53, 14, 538, 1, 0),
+(57, 54, 11, 128, 1, 0),
+(58, 55, 11, 384, 1, 0),
+(59, 55, 9, 384, 1, 0),
+(60, 56, 13, 95, 1, 0),
+(61, 57, 13, 95, 1, 0),
+(62, 58, 13, 95, 1, 0),
+(63, 59, 13, 95, 1, 0),
+(64, 60, 12, 149, 1, 0),
+(65, 61, 9, 256, 1, 0),
+(66, 61, 10, 298, 1, 0),
+(67, 62, 15, 199, 1, 0),
+(68, 63, 16, 239, 1, 0),
+(69, 64, 14, 269, 1, 0),
+(70, 65, 13, 95, 1, 0),
+(71, 66, 16, 239, 1, 0),
+(72, 67, 7, 256, 1, 0),
+(73, 68, 7, 256, 1, 0),
+(74, 69, 9, 128, 1, 0),
+(75, 70, 12, 149, 1, 0),
+(76, 71, 15, 199, 1, 0),
+(77, 72, 11, 256, 1, 0),
+(78, 73, 7, 128, 1, 0),
+(79, 74, 7, 128, 1, 0),
+(80, 75, 7, 512, 2, 0),
+(81, 75, 8, 256, 1, 0);
 
 -- --------------------------------------------------------
 
