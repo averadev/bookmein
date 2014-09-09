@@ -125,8 +125,4 @@ class  RoomsTypeModel extends CI_Model{
 			
 		return $rooms;	
 	}
-        public function getRoomId($room_id){
-		$this->db->select("id")->from("habitacion")->where("expedia_habitacion_id",$room_id)->limit(1);
-		return $this->db->get()->first_row()->id;
-	}
 }

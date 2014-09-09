@@ -14,10 +14,6 @@ class ReserveModel extends CI_Model{
 		$this->db->select("codigo as code")->from("reservacion")->where("id",$reserveId)->limit(1);
 		return $this->db->get()->first_row()->code;
 	}
-        public function getExpediaReserve($expedia_booking_id){
-            $query = $this->db->query("SELECT * FROM reservacion WHERE expedia_reservacion_id = '{$expedia_booking_id}'");
-		return $query->num_rows();
-        }
 	
 	public function getTotalAllReserve($starDate,$endDate,$roomType){
 		
@@ -110,27 +106,6 @@ class ReserveModel extends CI_Model{
 			'clienteId'				=> $customerId,
 			'fechaLlegada'				=> date( 'Y-m-d', strtotime( $arriveDate ) ),
 			'fechaSalida'				=> date( 'Y-m-d', strtotime( $departureDate) ),
-		);
-		
-		$this->db->insert("reservacion",$data);		
-		$this->db->select("LAST_INSERT_ID() as id");
-		$reserveId = $this->db->get()->first_row()->id;
-		$this->setReserveCode($reserveId);
-		
-		return $reserveId;
-	}
-        public function saveExpedia($arriveDate, $departureDate, $customerId, $expedia_reservacion_id){
-		// Remplazar / por - ya que el metodo strtotime() no reconoce formato dd/mm/yyyy
-		$arriveDate = str_replace("/", "-", $arriveDate);
-		$departureDate = str_replace("/", "-", $departureDate);
-		
-		$data = array(
-			'codigo'			=> 1,
-			'estadoReservacionId'	=> 1,
-			'clienteId'				=> $customerId,
-			'fechaLlegada'				=> date( 'Y-m-d', strtotime( $arriveDate ) ),
-			'fechaSalida'				=> date( 'Y-m-d', strtotime( $departureDate) ),
-                        'expedia_reservacion_id' => $expedia_reservacion_id
 		);
 		
 		$this->db->insert("reservacion",$data);		
